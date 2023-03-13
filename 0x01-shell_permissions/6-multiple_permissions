@@ -1,3 +1,2 @@
 #!/bi n/bash
 chmod ug+x,o+r hello
-
