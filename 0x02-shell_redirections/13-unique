@@ -1,2 +1,2 @@
 #!/bin/bash
-sort words.txt | uniq -c | awk '$1 == 1 {print $2}' 
+sort list | uniq -u
