@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -mindepth 1 -type d -printf  '%h\n' | sort | uniq -c | sort -rn
+find . -mindepth 1 -type d -printf  '%h\n' | sort | uniq -c | sort -rn \n
