@@ -17,7 +17,7 @@ I followed these steps to upload files to my sandbox online using the SFTP comma
 4. **Upload File**: To upload the PNG file from my local machine to the server, I used the put command. I replaced <local_file_path> with the actual path of my PNG file on my local machine.
 
    ```bash
-   put /mnt/c/Users/ACER\ NITRO/Dropbox/PC/Downloads/0-first_9_tasks.jpg
+   put /mnt/c/Users/ACER\ NITRO/OneDrive/Pictures/0-first_9_tasks.png
 
 5. **Verify Upload**: I double-checked to ensure the file was successfully uploaded by using the ls command to list the files in the current directory on the server.
 
