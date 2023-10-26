@@ -1,9 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Bash script that displays the content of the current directory in a list format
+# Only the part of the name after the first dash is displayed
 
-ls > list
-
-for i in $(cat list)
-do
-	echo "$i" | awk -F '-' '{ for (j=2; j<=NF; ++j) printf "%s%s", $j, (j==NF?ORS:OFS) }'
+# Using a glob to iterate over files in the current directory
+for i in *; do
+  # Skip hidden files
+  if [[ "$i" == .* ]]; then
+    continue
+  fi
+  # Using awk to display part of the name after the first dash
+  echo "$i" | awk -F '-' '{ for (j=2; j<=NF; ++j) printf "%s%s", $j, (j==NF?ORS:OFS) }'
 done
