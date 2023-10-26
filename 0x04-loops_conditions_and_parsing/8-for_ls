@@ -5,5 +5,5 @@ ls > list
 
 for i in $(cat list)
 do
-	echo "$i" | awk -F '.' '{print $1}'
+	echo "$i" | awk -F '-' '{ for (j=2; j<=NF; ++j) printf "%s%s", $j, (j==NF?ORS:OFS) }'
 done
