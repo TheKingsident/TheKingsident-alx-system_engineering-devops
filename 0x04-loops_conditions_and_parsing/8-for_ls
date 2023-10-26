@@ -1,10 +1,10 @@
 #!/bin/bash
 # Bash script that displays the content of the current directory in a list format
 
-for i in *; do
-  if [[ "$i" == .* ]]; then
-    continue
-  fi
-  # Using awk to display part of the name after the first dash
-  echo "$i" | awk -F '-' '{ for (j=2; j<=NF; ++j) printf "%s%s", $j, (j==NF?ORS:OFS) }'
+for i in *
+do
+    if [[ "$i" == .* ]]; then
+        continue
+    fi
+    echo "${i#*-}"
 done
