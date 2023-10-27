@@ -3,5 +3,10 @@
 
 pid=$(pgrep -f "4-to_infinity_and_beyond")
 
-kill "$pid"
-echo "Terminated"
+if [[ -n "$pid" ]]
+then
+  kill "$pid"
+  echo "Terminated"
+else
+  echo "4-to_infinity_and_beyond process not found"
+fi
