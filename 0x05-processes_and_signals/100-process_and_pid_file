@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# A script that does a bunch of things lol
+
+echo $$ > /var/run/myscript.pid 
+
+terminate_script() {
+  echo "I hate the kill command"
+  rm -f /var/run/myscript.pid
+  exit 0
+}
+trap 'terminate_script' SIGTERM
+
+quit_script() {
+  echo "Quitting..."
+  rm -f /var/run/myscript.pid
+  exit 0
+}
+trap 'quit_script' SIGQUIT
+
+trap 'echo "Y U no love me?!"' SIGINT
+
+while true
+do
+  echo "To infinity and beyond"
+  sleep 2
+done
