@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Use netstat command to display listening sockets with PID and program name
+
+netstat -ltnp
