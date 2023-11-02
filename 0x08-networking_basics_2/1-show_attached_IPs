@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Loop through all active IPv4 addresses and print them
+
+ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | while read -r line ; do
+    echo "$line"
+done
+
