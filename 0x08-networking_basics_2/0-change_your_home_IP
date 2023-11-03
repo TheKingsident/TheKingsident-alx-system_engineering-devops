@@ -7,7 +7,3 @@
 echo "127.0.0.2 localhost" >> /etc/hosts
 echo "8.8.8.8 facebook.com" >> /etc/hosts
 
-# Output the /etc/hosts file
-echo "Contents of /etc/hosts:"
-cat /etc/hosts
-
