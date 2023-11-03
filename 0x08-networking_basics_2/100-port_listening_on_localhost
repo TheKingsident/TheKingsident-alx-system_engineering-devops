@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Set up a simple TCP listener on port 98
+
+nc -1 127.0.0.1 98
+
