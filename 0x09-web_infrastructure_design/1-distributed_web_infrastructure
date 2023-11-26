@@ -1,0 +1,23 @@
+Distributed Web Infrastructure
+Link to image: https://drive.google.com/file/d/1T9LVAWyNCOz7NbnircBDwrUGb86Du2bS/view?usp=sharing
+
+For every additional element, why you are adding it:
+Server: The additional server ensures there is little to no downtime on the website if one of them goes down for maintenance. The workload is evenly distributed between both servers.
+
+Load Balancer: It efficiently distributes the traffic between both servers.
+
+What distribution algorithm your load balancer is configured with and how it works:
+Based on the similar specification of servers I have in my diagram, my load balancer uses the Round Robin algorithm. This algorithm ensures traffic is evenly distributed between both servers.
+
+Is your load-balancer enabling an Active-Active or Active-Passive setup, explain the difference between both:
+Active-Active. 
+In this setup, both servers are running simultaneously and the load is evenly distributed between both servers. If one fails, the remaining active server keeps on running and serving clients' requests. However, in the active-passive method, one server is active and handles all of the client's requests while another is passive and on standby. If the active server is taken offline for any reason, the passive one goes active manually or automatically.
+
+You must be able to explain what the issues are with this infrastructure:
+Where is SPOF: There is only one load balancer, should it fail, the entire website becomes unreachable
+
+Security issues (no firewall, no HTTPS):
+As there are more servers, there are more points for potential attacks. The load balancer as the entry point can become a target for DDoS attacks.
+
+No monitoring:
+When there is no monitoring, when issues do arise, the lack of monitoring data makes troubleshooting much more difficult and time-consuming, as there's no historical data to analyze for clues. It also becomes difficult to quickly detect when a server or service fails. This can lead to prolonged downtime, as the issue might only be noticed when users report it or when it escalates to a more serious problem.

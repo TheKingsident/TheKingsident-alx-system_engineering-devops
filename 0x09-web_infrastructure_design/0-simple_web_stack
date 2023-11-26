@@ -1,0 +1,27 @@
+One-Server Infrastructure
+Link to image: https://drive.google.com/file/d/1e9E4MIgG5P1CsNn4-tPYyIL6QMl0XCaT/view?usp=sharing
+
+What is a server?
+A server is a computer that supplies other computers on a network with resources, data, services, and programs. A server could be physical as well as virtual (Virtual Machine).
+
+What type of DNS record www is in www.foobar.com?
+CNAME. That is a Canonical name record that serves as an alias to the domain name foobar.com
+
+What is the role of the web server?
+The role of the web server in this case Nginx is to handle http(s) requests from the browser/client computer. It finds the requested filers on the server and if found serves them to the client.
+
+Role of the Application Server?
+This handles the logic of the web application. It generates dynamic content and interacts with the web server and database to produce customized responses for each client's request.
+
+Role of the Database:
+This stores and manages data for the website. It can also contain user information
+
+What is the server using to communicate with the computer of the user requesting the website?
+It uses HTTP or HTTPS - the secured version.
+
+Issues With the One-Server Infrastructure:
+SPOF. If the server goes down due to hardware failure, software issues, or maintenance, the website becomes inaccessible 
+
+Cannot scale if too much incoming traffic. A single server can not handle too much incoming traffic and will result in slow response and crashes in peak hours
+
+Downtime when maintenance is needed (like deploying new code web server needs to be restarted). This will result in the entire site or sites going offline for a software or hardware upgrade.
