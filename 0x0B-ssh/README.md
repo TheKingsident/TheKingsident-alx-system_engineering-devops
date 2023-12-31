@@ -1,0 +1,1 @@
+This directory contains assignment files for the "0x0B. SSH" tasks on ALX
