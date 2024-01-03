@@ -8,7 +8,7 @@ sudo apt install -y nginx
 sudo service nginx start
 
 # Configure NGINX for custom page and redirect
-echo "server {
+printf "server {
     listen 80;
 
     location / {
