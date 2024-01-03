@@ -25,7 +25,7 @@ printf "server {
     location = /custom_404.html {
         internal;
         add_header Content-Type text/plain;
-        return 200 'Ceci n\'est pas une page\n';
+        return 200 'Ceci n\\'est pas une page\n';
     }
 }" | sudo tee /etc/nginx/sites-available/default
 
