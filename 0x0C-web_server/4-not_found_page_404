@@ -4,6 +4,9 @@
 sudo apt update
 sudo apt install -y nginx
 
+# Create a custom 404 page HTML file
+printf "Ceci n'est pas une page\n" | sudo tee /var/www/html/custom_404.html
+
 # Ensure NGINX is started
 sudo service nginx start
 
@@ -13,11 +16,11 @@ server {
     listen 80;
 
     # Custom 404 page
-    error_page 404 /custom_404;
+    error_page 404 /custom_404.html;
     
-    location = /custom_404 {
-        add_header Content-Type text/plain;
-        return 404 'Ceci n\'est pas une page\n';
+    location = /custom_404.html {
+        root /var/www/html;
+        internal;
     }
 
     location / {
