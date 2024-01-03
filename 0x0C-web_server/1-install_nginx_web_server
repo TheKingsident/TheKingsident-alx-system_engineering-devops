@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Installs NGINX on a server
+
+sudo apt update
+sudo apt install -y nginx
+
+# Ensure NGINX is started
+sudo service nginx start
+
+# Configure NGINX to listen on port 80 and serve a custom page
+echo "server {
+    listen 80;
+    location / {
+        return 200 'Hello World!/n';
+        add_header Content-Type text/plain;
+    }
+}" | sudo tee /etc/nginx/sites-available/default
+
+# Test NGINX configuration
+sudo nginx -t
+
+# Restart NGINX without using systemctl
+sudo service nginx restart
