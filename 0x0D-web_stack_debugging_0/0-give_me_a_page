@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+docker pull holbertonschool/265-0
+docker build -t my-holberton-image .
+docker run -p 8080:80 -d -it my-holberton-image
+docker ps
+docker exec -it [container_id] service apache2 status
+docker exec -it [container_id] apachectl start
+docker exec -it [container_id] service apache2 status
+
+docker exec -it [container_id] cat /etc/apache2/apache2.conf
+docker exec -it [container_id] cat /etc/apache2/sites-available/000-default.conf
+
+docker exec -it [container_id] bash -c 'echo "Hello Holberton" > /var/www/html/index.html'
+docker exec -it [container_id] apachectl restart
+
+curl 0:8080
