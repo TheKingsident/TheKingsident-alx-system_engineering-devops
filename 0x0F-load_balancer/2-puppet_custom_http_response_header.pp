@@ -34,6 +34,10 @@ server {
         add_header X-Served-By ${hostname};
     }
 
+    location /static/ {
+        root /var/www/html;
+    }
+
     location /redirect_me {
         return 301 http://google.com;
     }
