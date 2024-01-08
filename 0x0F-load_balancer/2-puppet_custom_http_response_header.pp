@@ -31,7 +31,7 @@ server {
 
     location / {
         try_files \$uri \$uri/ =404;
-        add_header X-Served-By $hostname;
+        add_header X-Served-By ${hostname};
     }
 
     location /redirect_me {
@@ -42,7 +42,7 @@ server {
     location = / {
         return 200 'Hello World!\\n';
         add_header Content-Type text/plain;
-        add_header X-Served-By $hostname;
+        add_header X-Served-By ${hostname};
     }
 }
 ",
