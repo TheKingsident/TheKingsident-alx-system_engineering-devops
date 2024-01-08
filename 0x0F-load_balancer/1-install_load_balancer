@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Installs and configure HAproxy on a load balancer server.
+
+# Define the path to the HAProxy configuration file
+HAPROXY_CFG="/etc/haproxy/haproxy.cfg"
+
+# Check if HAProxy is installed, install if it's not
+if ! command -v haproxy >/dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y haproxy
+fi
+
+# Backup the original configuration file
+sudo cp $HAPROXY_CFG "${HAPROXY_CFG}.bak"
+
+# Write the new configuration to the file
+cat <<EOT | sudo tee $HAPROXY_CFG
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server web-01 54.236.27.95:80 check
+    server web-02 54.237.18.67:80 check
+EOT
+
+# Check the configuration syntax
+sudo haproxy -c -f $HAPROXY_CFG
+
+# Restart HAProxy to apply the changes
+sudo systemctl restart haproxy
+
+# Enable HAProxy to start on boot
+sudo systemctl enable haproxy
