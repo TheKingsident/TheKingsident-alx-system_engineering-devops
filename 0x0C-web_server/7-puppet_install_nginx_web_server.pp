@@ -40,7 +40,6 @@ server {
     # Return Hello World for the root URL
     location = / {
         return 200 'Hello World!\\n';
-        add_header Content-Type text/plain;
     }
 }
 ",
