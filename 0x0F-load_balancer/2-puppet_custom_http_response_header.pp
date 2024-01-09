@@ -41,12 +41,6 @@ server {
     location /redirect_me {
         return 301 http://google.com;
     }
-
-    # Return Hello World for the root URL
-    location = / {
-        return 200 'Hello World!\\n';
-        add_header X-Served-By ${hostname};
-    }
 }
 ",
   require => Package['nginx'], # Ensures NGINX is installed before modifying the config
