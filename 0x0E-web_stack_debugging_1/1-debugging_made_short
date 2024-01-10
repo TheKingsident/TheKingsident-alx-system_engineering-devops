@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Script that configures NGINX to listen on port 80
+
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
