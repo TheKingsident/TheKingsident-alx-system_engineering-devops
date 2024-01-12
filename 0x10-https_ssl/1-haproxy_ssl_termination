@@ -1,0 +1,29 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    user haproxy
+    group haproxy
+    daemon
+    ssl-dh-param-file /etc/haproxy/dhparams.pem
+
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+frontend http_front
+    bind *:80
+    bind *:443 ssl crt /etc/haproxy/certs/www.softengcake.tech.pem
+    redirect scheme https if !{ ssl_fc }
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server 352448-web-01 54.236.27.95:80 check
+    server 352448-web-02 54.237.18.67:80 check
