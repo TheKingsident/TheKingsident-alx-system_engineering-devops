@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Configures a server so that its firewall redirects port 8080/TCP to port 80/TCP using UFW.
+
+# Define the UFW before.rules path
+UFW_RULES_FILE="/etc/ufw/before.rules"
+
+# Define the NAT rule to be added
+NAT_RULE="*nat\n:PREROUTING ACCEPT [0:0]\n-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80\nCOMMIT"
+
+# Check if the NAT rule already exists in the file
+if ! grep -qxF "COMMIT" "$UFW_RULES_FILE"; then
+    # Backup the current UFW before.rules file
+    sudo cp "$UFW_RULES_FILE" "${UFW_RULES_FILE}.backup"
+
+    # Add the NAT rule to before.rules
+    echo -e "$NAT_RULE" | sudo tee -a "$UFW_RULES_FILE" > /dev/null
+else
+    echo "NAT rule already exists in $UFW_RULES_FILE"
+fi
+
+# Reload UFW to apply changes
+sudo ufw reload
+
+# Optional: Save the iptables rule so it persists across reboots
+# This step is optional and depends on whether your system retains iptables rules across reboots
+sudo sh -c "iptables-save > /etc/iptables.rules"
+
+# Optional: Make sure the rule is applied on boot by adding it to rc.local
+# This step is dependent on your system's init system. If your system uses systemd, this might not be applicable
+if ! grep -qxF 'iptables-restore < /etc/iptables.rules' /etc/rc.local; then
+    sudo sh -c "echo 'iptables-restore < /etc/iptables.rules' >> /etc/rc.local"
+fi
