@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Script to install and set up UFW
+
+# Update package lists
+sudo apt-get update
+
+# Install UFW
+sudo apt-get install -y ufw
+
+# Set default UFW policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH (port 22), HTTP (port 80), and HTTPS (port 443)
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+
+# Enable UFW
+sudo ufw --force enable
+
+# Reload UFW to apply changes
+sudo ufw reload
+
+# Check the status of UFW
+sudo ufw status verbose
