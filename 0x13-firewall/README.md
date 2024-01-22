@@ -1,0 +1,1 @@
+This directory contains assignment files for the "0x13. Firewall" task from ALX
