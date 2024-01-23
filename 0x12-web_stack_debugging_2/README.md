@@ -1,0 +1,1 @@
+This directory contains assignment files for the "0x12. Web stack debugging #2" task from ALX
