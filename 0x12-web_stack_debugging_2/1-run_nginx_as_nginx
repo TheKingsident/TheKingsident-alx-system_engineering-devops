@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# configures the container to run NGINX as nginx 
+
+# Define the path to the nginx configuration file
+NGINX_CONF="/etc/nginx/nginx.conf"
+
+# Define the new site configuration file name
+NEW_SITE_CONF="/etc/nginx/sites-available/listen_on_8080"
+
+# Update the user directive in nginx.conf
+sed -i 's/^\s*#\?\s*user\s.*/user nginx;/' "$NGINX_CONF"
+
+# Create the new Nginx site configuration file
+cat <<EOF > "$NEW_SITE_CONF"
+server {
+    listen 8080 default_server;
+
+    # Root directory and index file
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    # Logging
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    # Default location
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# Create a symbolic link to enable the site
+ln -s "$NEW_SITE_CONF" /etc/nginx/sites-enabled/
+
+# Reload Nginx to apply changes
+nginx -s reload
+
+echo "Nginx configuration for listening on port 8080 has been created and enabled."
+
+# Stop the apache server
+service apache2 stop
+killall apache2
+
+
+# Start NGINX
+nginx
