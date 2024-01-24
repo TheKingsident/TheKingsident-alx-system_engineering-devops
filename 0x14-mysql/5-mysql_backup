@@ -11,23 +11,7 @@ DATE=$(date +%d-%m-%Y)
 ARCHIVE_FILE="${DATE}.tar.gz"
 
 # Create MySQL dump
-mysqldump --user=${MYSQL_USER} --password="${MYSQL_PASS}" --databases tyrell_corp > ${BACKUP_FILE}
+mysqldump --user=${MYSQL_USER} --password="${MYSQL_PASS}"  --databases tyrell_corp> ${BACKUP_FILE}
 
-# Check if mysqldump was successful
-if [ $? -eq 0 ]; then
-    echo "MySQL dump created successfully."
-
-    # Compress the dump file
-    tar -czvf "${ARCHIVE_FILE}" ${BACKUP_FILE}
-
-    # Check if compression was successful
-    if [ $? -eq 0 ]; then
-        echo "Backup compressed into archive: ${ARCHIVE_FILE}"
-    else
-        echo "Error compressing the backup file."
-        exit 2
-    fi
-else
-    echo "Error creating MySQL dump."
-    exit 3
-fi
+# Compress the dump file
+tar -czvf "${ARCHIVE_FILE}" ${BACKUP_FILE}
