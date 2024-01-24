@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# generates a MySQL dump and creates a compressed archive out of it.
+
+# MySQL credentials
+MYSQL_USER="root"
+MYSQL_PASS="$1"
+
+# File names
+BACKUP_FILE="backup.sql"
+DATE=$(date +%d-%m-%Y)
+ARCHIVE_FILE="${DATE}.tar.gz"
+
+# Create MySQL dump
+mysqldump --user=${MYSQL_USER} --password="${MYSQL_PASS}" --all-databases > ${BACKUP_FILE}
+
+# Check if mysqldump was successful
+if [ $? -eq 0 ]; then
+    echo "MySQL dump created successfully."
+
+    # Compress the dump file
+    tar -czf "${ARCHIVE_FILE}" ${BACKUP_FILE}
+
+    # Check if compression was successful
+    if [ $? -eq 0 ]; then
+        echo "Backup compressed into archive: ${ARCHIVE_FILE}"
+        rm ${BACKUP_FILE} # Optionally remove the uncompressed dump file
+    else
+        echo "Error compressing the backup file."
+        exit 2
+    fi
+else
+    echo "Error creating MySQL dump."
+    exit 3
+fi
