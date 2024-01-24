@@ -1,0 +1,1 @@
+This directory contains assignment files for the "0x14. MySQL" from ALX
