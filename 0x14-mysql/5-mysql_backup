@@ -11,7 +11,7 @@ DATE=$(date +%d-%m-%Y)
 ARCHIVE_FILE="${DATE}.tar.gz"
 
 # Create MySQL dump
-mysqldump --user=${MYSQL_USER} --password="${MYSQL_PASS}" --all-databases > ${BACKUP_FILE}
+mysqldump --user=${MYSQL_USER} --password="${MYSQL_PASS}" --databases tyrell_corp > ${BACKUP_FILE}
 
 # Check if mysqldump was successful
 if [ $? -eq 0 ]; then
