@@ -13,18 +13,4 @@ ARCHIVE_FILE="${DATE}.tar.gz"
 # Create MySQL dump
 mysqldump --user=${MYSQL_USER} --password="${MYSQL_PASS}" --all-databases > ${BACKUP_FILE}
 
-# Check if mysqldump was successful
-if [ $? -eq 0 ]; then
-    # Compress the dump file
-    tar -czvf "${ARCHIVE_FILE}" ${BACKUP_FILE}
-
-    # Check if compression was successful
-    if [ $? -eq 0 ]; then
-        rm ${BACKUP_FILE} # Optionally remove the uncompressed dump file
-    else
-
-        exit 2
-    fi
-else
-    exit 3
-fi
+tar -czvf "${ARCHIVE_FILE}" ${BACKUP_FILE}
