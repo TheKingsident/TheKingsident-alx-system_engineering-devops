@@ -11,6 +11,7 @@ DATE=$(date +%d-%m-%Y)
 ARCHIVE_FILE="${DATE}.tar.gz"
 
 # Create MySQL dump
-mysqldump -u root -p"$1" --all-databases > backup.sql
+mysqldump --user=${MYSQL_USER} --password="${MYSQL_PASS}"  --databases tyrell_corp> ${BACKUP_FILE}
+
 # Compress the dump file
-tar -czf $DATE.tar.gz backup.sql
+tar -czvf "${ARCHIVE_FILE}" ${BACKUP_FILE}
