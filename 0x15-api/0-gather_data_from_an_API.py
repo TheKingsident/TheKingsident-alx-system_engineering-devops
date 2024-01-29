@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """
-This script retrieves the TODO list progress for a specified employee 
+This script retrieves the TODO list progress for a specified employee
 from a REST API and displays it.
 """
 
-from sys import argv
 import requests
+from sys import argv
+
 
 def main():
     if len(argv) < 2:
@@ -48,6 +49,7 @@ def main():
             outputString += f"\n\t {task.get('title', 'No Title')}"
 
     print(outputString)
+
 
 if __name__ == "__main__":
     main()
