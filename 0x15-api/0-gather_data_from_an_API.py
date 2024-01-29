@@ -1,24 +1,53 @@
 #!/usr/bin/python3
+"""
+This script retrieves the TODO list progress for a specified employee 
+from a REST API and displays it.
+"""
 
 from sys import argv
 import requests
 
-employeeID = argv[1]
-api_link = 'https://jsonplaceholder.typicode.com/users/' + employeeID
-response = requests.get(api_link)
-employeeData = response.json()
+def main():
+    if len(argv) < 2:
+        print("Usage: script.py <employeeID>")
+        return
 
-tasks_respoonse = requests.get('https://jsonplaceholder.typicode.com/users/' + employeeID + '/todos')
-tasksData = tasks_respoonse.json()
+    try:
+        employeeID = int(argv[1])
+    except ValueError:
+        print("Employee ID must be an integer.")
+        return
 
-employeeName = employeeData['name']
-totalTasks = len(tasksData)
-completedTasks = sum(task['completed'] for task in tasksData)
+    api_link = f'https://jsonplaceholder.typicode.com/users/{employeeID}'
+    response = requests.get(api_link)
 
-outputString = f"Employee {employeeName} is done with tasks({completedTasks}/{totalTasks}):"
-for task in tasksData:
-    if task['completed']:
-        outputString += f"\n\t {task['title']}"
+    if not response.ok:
+        print("Failed to retrieve employee data.")
+        return
 
+    employeeData = response.json()
 
-print(outputString)
+    tasks_url = f'https://jsonplaceholder.typicode.com/users/' \
+                f'{employeeID}/todos'
+    tasks_response = requests.get(tasks_url)
+
+    if not tasks_response.ok:
+        print("Failed to retrieve tasks data.")
+        return
+
+    tasksData = tasks_response.json()
+
+    employeeName = employeeData.get('name', 'N/A')
+    totalTasks = len(tasksData)
+    completedTasks = sum(task.get('completed', False) for task in tasksData)
+
+    outputString = (f"Employee {employeeName} is done with tasks"
+                    f"({completedTasks}/{totalTasks}):")
+    for task in tasksData:
+        if task.get('completed', False):
+            outputString += f"\n\t {task.get('title', 'No Title')}"
+
+    print(outputString)
+
+if __name__ == "__main__":
+    main()
