@@ -7,6 +7,7 @@ from a REST API. The output is a JSON file with tasks of each employee.
 import json
 import requests
 
+
 def fetch_employee_tasks(employeeID):
     """
     Fetch tasks for a specific employee by their ID.
@@ -31,6 +32,7 @@ def fetch_employee_tasks(employeeID):
     tasksData = tasks_response.json()
     return username, tasksData
 
+
 def export_all_to_json(filename):
     """
     Exports all tasks from all employees to a JSON file.
@@ -48,11 +50,13 @@ def export_all_to_json(filename):
     with open(filename, 'w') as json_file:
         json.dump(all_tasks, json_file)
 
+
 def main():
     """
     Main function to trigger the export process.
     """
     export_all_to_json('todo_all_employees.json')
+
 
 if __name__ == "__main__":
     main()
