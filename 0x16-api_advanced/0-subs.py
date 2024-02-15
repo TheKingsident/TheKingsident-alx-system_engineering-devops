@@ -11,15 +11,18 @@ def number_of_subscribers(subreddit):
     """
     Returns the number of subscribers for a subreddit.
     """
-    api_link = f'https://www.reddit.com/r/{subreddit}/about.json'
-    headers = {'User-Agent': 'SubredditSubscriberCounter/0.1 by Kingsident'}
+    url = f'https://www.reddit.com/r/{subreddit}/about.json'
 
-    response = requests.get(api_link, headers=headers, allow_redirects=False)
+    headers = {'User-Agent': 'Kingsident'}
 
-    if not response.ok:
+    try:
+        response = requests.get(url, headers=headers, allow_redirects=False)
+
+        if response.status_code == 200:
+            data = response.json()
+            return data['data']['subscribers']
+        else:
+            return 0
+    except Exception as e:
+        print(f"Error: {e}")
         return 0
-
-    data = response.json()
-    subscribers = data.get('data', {}).get('subscribers', 0)
-
-    return int(subscribers) if subscribers else 0
