@@ -16,7 +16,8 @@ def top_ten(subreddit):
     headers = {'User-Agent': 'Kingsident'}
 
     try:
-        response = requests.get(api_link, headers=headers, allow_redirects=False)
+        response = requests.get(api_link, headers=headers,
+                                allow_redirects=False)
 
         if response.status_code == 200:
             data = response.json()
