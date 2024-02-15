@@ -1,0 +1,1 @@
+This directory contains assignment files for the " 0x16. API advanced" task from ALX
