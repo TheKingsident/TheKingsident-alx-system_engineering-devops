@@ -1,0 +1,1 @@
+This directory contains assignment files for the "0x1A. Application server" task from ALX
