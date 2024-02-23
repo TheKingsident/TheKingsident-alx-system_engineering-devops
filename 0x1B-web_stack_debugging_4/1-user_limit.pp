@@ -1,13 +1,23 @@
-# Lets holberton user log in and open files
-
-exec { 'increases-hard-limit':
-  command => "sed -i '/^holberton hard/s/4/50000/' /etc/security/limits.conf",
-  path    => ['/usr/local/bin/', '/bin/'],
-  onlyif  => "grep '^holberton hard' /etc/security/limits.conf | grep -q '4'",
+# Add the holberton user to the sudo group
+user { 'holberton':
+  ensure => present,
 }
 
-exec { 'increases-soft-limit':
-  command => "sed -i '/^holberton soft/s/5/50000/' /etc/security/limits.conf",
-  path    => ['/usr/local/bin/', '/bin/'],
-  onlyif  => "grep '^holberton soft' /etc/security/limits.conf | grep -q '5'",
+group { 'sudo':
+  members => ['holberton'],
+}
+
+# Update sudoers file to allow members of the sudo group to execute commands without a password
+file { '/etc/sudoers':
+  content => template('yourmodule/sudoers.erb'),
+  mode    => '0440',
+  owner   => 'root',
+  group   => 'root',
+  notify  => Exec['validate_sudoers'],
+}
+
+exec { 'validate_sudoers':
+  command     => 'visudo -c',
+  refreshonly => true,
+  subscribe   => File['/etc/sudoers'],
 }
