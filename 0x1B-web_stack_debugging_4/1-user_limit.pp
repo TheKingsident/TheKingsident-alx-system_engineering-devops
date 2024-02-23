@@ -1,19 +1,13 @@
-# Add the holberton user to the sudo group
-user { 'holberton':
-  ensure => present,
+# Lets holberton user log in and open files
+
+exec { 'increases-hard-file-limit-for-holberton-user':
+  command => "sed -i '/^holberton hard/s/4/50000/' /etc/security/limits.conf",
+  path    => ['/usr/local/bin/', '/bin/'],
+  onlyif  => "grep '^holberton hard' /etc/security/limits.conf | grep -q '4'",
 }
 
-group { 'sudo':
-  ensure  => present,
-  members => ['holberton'],
-}
-
-# Allow members of the sudo group to execute commands without a password
-file { '/etc/sudoers':
-  ensure       => file,
-  content      => "# This file is managed by Puppet. DO NOT EDIT.\n\n%sudo ALL=(ALL:ALL) NOPASSWD: ALL\n",
-  mode         => '0440',
-  owner        => 'root',
-  group        => 'root',
-  validate_cmd => 'visudo -cf %',
+exec { 'increases-soft-file-limit-for-holberton-user':
+  command => "sed -i '/^holberton soft/s/5/50000/' /etc/security/limits.conf",
+  path    => ['/usr/local/bin/', '/bin/'],
+  onlyif  => "grep '^holberton soft' /etc/security/limits.conf | grep -q '5'",
 }
